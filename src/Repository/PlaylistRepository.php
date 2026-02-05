@@ -42,7 +42,7 @@ class PlaylistRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
     }
-	
+    
     /**
      * Enregistrements dont un champ contient une valeur
      * ou tous les enregistrements si la valeur est vide
