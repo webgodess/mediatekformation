@@ -34,7 +34,7 @@ class PlaylistsController extends AbstractController {
      */
     private $categorieRepository;
 
-    const RENDER_PATH = "pages/playlists.html.twig";
+    private const RENDER_PATH = "pages/playlists.html.twig";
     
     public function __construct(PlaylistRepository $playlistRepository,
             CategorieRepository $categorieRepository,
