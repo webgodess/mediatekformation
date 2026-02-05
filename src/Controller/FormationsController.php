@@ -27,7 +27,7 @@ class FormationsController extends AbstractController {
      */
     private $categorieRepository;
 
-    const RENDER_PATH = "pages/formations.html.twig";
+    private const RENDER_PATH = "pages/formations.html.twig";
 
     public function __construct(FormationRepository $formationRepository, CategorieRepository $categorieRepository) {
         $this->formationRepository = $formationRepository;
