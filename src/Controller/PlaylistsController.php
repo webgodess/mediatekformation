@@ -17,24 +17,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlaylistsController extends AbstractController {
     
     /**
-     * 
+     *
      * @var PlaylistRepository
      */
     private $playlistRepository;
-    
+
     /**
-     * 
+     *
      * @var FormationRepository
      */
     private $formationRepository;
-    
+
     /**
-     * 
+     *
      * @var CategorieRepository
      */
-    private $categorieRepository;    
+    private $categorieRepository;
     
-    function __construct(PlaylistRepository $playlistRepository, 
+    function __construct(PlaylistRepository $playlistRepository,
             CategorieRepository $categorieRepository,
             FormationRepository $formationRespository) {
         $this->playlistRepository = $playlistRepository;
