@@ -33,6 +33,8 @@ class PlaylistsController extends AbstractController {
      * @var CategorieRepository
      */
     private $categorieRepository;
+
+    const RENDER_PATH = "pages/playlists.html.twig";
     
     public function __construct(PlaylistRepository $playlistRepository,
             CategorieRepository $categorieRepository,
@@ -50,7 +52,7 @@ class PlaylistsController extends AbstractController {
     public function index(): Response{
         $playlists = $this->playlistRepository->findAllOrderByName('ASC');
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+        return $this->render(self::RENDER_PATH, [
             'playlists' => $playlists,
             'categories' => $categories
         ]);
@@ -64,7 +66,7 @@ class PlaylistsController extends AbstractController {
                 break;
         }
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+        return $this->render(self::RENDER_PATH, [
             'playlists' => $playlists,
             'categories' => $categories
         ]);
@@ -75,7 +77,7 @@ class PlaylistsController extends AbstractController {
         $valeur = $request->get("recherche");
         $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+        return $this->render(self::RENDER_PATH, [
             'playlists' => $playlists,
             'categories' => $categories,
             'valeur' => $valeur,
@@ -88,7 +90,7 @@ class PlaylistsController extends AbstractController {
         $playlist = $this->playlistRepository->find($id);
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
-        return $this->render("pages/playlist.html.twig", [
+        return $this->render(self::RENDER_PATH, [
             'playlist' => $playlist,
             'playlistcategories' => $playlistCategories,
             'playlistformations' => $playlistFormations
