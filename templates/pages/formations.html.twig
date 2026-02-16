@@ -78,7 +78,7 @@
                     <td class="text-center">
                         {% if formation.miniature %}
                             <a href="{{ path('formations.showone', {id:formation.id}) }}">
-                                <img src="{{ formation.miniature }}" alt="capture ecran de la formation">
+                                <img src="{{ formation.miniature }}" alt="capture miniature de la formation {{formation.title}}">
                             </a>
                         {% endif %}
                     </td>
