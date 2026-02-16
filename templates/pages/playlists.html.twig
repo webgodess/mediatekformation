@@ -39,28 +39,26 @@
         </thead>
         <tbody>
             <!-- boucle sur les playlists -->
-            {% if playlists|length > 0 %}
-                {% for k in 0..playlists|length-1 %}
+            {% for playlist in playlists%}
                     <tr class="align-middle">
                         <td>
                             <h5 class="text-info">
-                                {{ playlists[k].name }}
+                                {{ playlist.name }}
                             </h5>
                         </td>                 
                         <td class="text-left">
-                            {% set categories = playlists[k].categoriesplaylist %}
-                            {% if categories|length > 0  %}
-                                {% for c in 0..categories|length-1 %}
-                                    &nbsp;{{ categories[c] }}                                  
+                            {% set categories = playlist.categoriesplaylist %}
+                            {% for category in categories %}
+                                
+                                    &nbsp;{{ category }}                                  
                                 {% endfor %}
-                            {% endif %}
                         </td>            					
                         <td class="text-center">
-                            <a href="{{ path('playlists.showone', {id:playlists[k].id}) }}" class="btn btn-secondary">Voir détail</a>
+                            <a href="{{ path('playlists.showone', {id:playlist.id}) }}" class="btn btn-secondary">Voir détail</a>
                         </td> 					
                     </tr>
-                {% endfor %}	
-            {% endif %}
+               	
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}
