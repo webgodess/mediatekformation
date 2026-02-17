@@ -51,7 +51,7 @@ class PlaylistRepository extends ServiceEntityRepository
      * @param type $ordre
      * @return Playlist[]
      */
-    public function findAllOrderByNumber($ordre): array
+    public function findAllOrderByNumberFormations($ordre): array
     {
         return $this->createQueryBuilder('p')
             ->select('p, COUNT(f.id) AS nombreFormations')
