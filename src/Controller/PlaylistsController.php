@@ -14,8 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @author emds
  */
-class PlaylistsController extends AbstractController {
-    
+class PlaylistsController extends AbstractController
+{
+
     /**
      *
      * @var PlaylistRepository
@@ -35,21 +36,24 @@ class PlaylistsController extends AbstractController {
     private $categorieRepository;
 
     private const RENDER_PATH = "pages/playlists.html.twig";
-    
-    public function __construct(PlaylistRepository $playlistRepository,
-            CategorieRepository $categorieRepository,
-            FormationRepository $formationRepository) {
+
+    public function __construct(
+        PlaylistRepository $playlistRepository,
+        CategorieRepository $categorieRepository,
+        FormationRepository $formationRepository
+    ) {
         $this->playlistRepository = $playlistRepository;
         $this->categorieRepository = $categorieRepository;
         $this->formationRepository = $formationRepository;
     }
-    
+
     /**
      * @Route("/playlists", name="playlists")
      * @return Response
      */
     #[Route('/playlists', name: 'playlists')]
-    public function index(): Response{
+    public function index(): Response
+    {
         $playlists = $this->playlistRepository->findAllOrderByName('ASC');
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::RENDER_PATH, [
@@ -59,10 +63,15 @@ class PlaylistsController extends AbstractController {
     }
 
     #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
-    public function sort($champ, $ordre): Response{
+    public function sort($champ, $ordre): Response
+    {
         if ($champ === 'name') {
-    $playlists = $this->playlistRepository->findAllOrderByName($ordre);
-}
+            $playlists = $this->playlistRepository->findAllOrderByName($ordre);
+        } elseif ($champ === 'nbFormations') {
+            $playlists = $this->playlistRepository->findAllOrderByNumberFormations($ordre);
+        } else {
+            $playlists = $this->playlistRepository->findAllOrderByName('ASC');
+        }
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::RENDER_PATH, [
             'playlists' => $playlists,
@@ -71,7 +80,8 @@ class PlaylistsController extends AbstractController {
     }
 
     #[Route('/playlists/recherche/{champ}/{table}', name: 'playlists.findallcontain')]
-    public function findAllContain($champ, Request $request, $table=""): Response{
+    public function findAllContain($champ, Request $request, $table = ""): Response
+    {
         $valeur = $request->get("recherche");
         $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
@@ -84,7 +94,8 @@ class PlaylistsController extends AbstractController {
     }
 
     #[Route('/playlists/playlist/{id}', name: 'playlists.showone')]
-    public function showOne($id): Response{
+    public function showOne($id): Response
+    {
         $playlist = $this->playlistRepository->find($id);
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
@@ -94,5 +105,5 @@ class PlaylistsController extends AbstractController {
             'playlistformations' => $playlistFormations
         ]);
     }
-    
+
 }
