@@ -9,7 +9,8 @@
                 {% for playlist in playlistcategories %}
                     {{ playlist.name }}&nbsp;
                 {% endfor %}
-            <br /><br />
+            <br />
+            <strong>Nombre de formations : </strong>{{ playlist.nombreFormations }}<br/>
             <strong>description :</strong><br />
                 {{ playlist.description|nl2br }}
         </div>
