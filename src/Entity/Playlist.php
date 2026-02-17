@@ -70,6 +70,13 @@ class Playlist
         return $this->formations;
     }
 
+     public function getNombreFormations(): int
+    {
+        return $this->formations->count();
+    }
+
+
+
     public function addFormation(Formation $formation): static
     {
         if (!$this->formations->contains($formation)) {
