@@ -54,7 +54,7 @@ class PlaylistRepository extends ServiceEntityRepository
     public function findAllOrderByNumber($ordre): array
     {
         return $this->createQueryBuilder('p')
-            ->select('p, COUNT(f.id) AS nbFormations')
+            ->select('p, COUNT(f.id) AS nombreFormations')
             ->leftjoin('p.formations', 'f')
             ->groupBy('p.id')
             ->orderBy('COUNT(f.id)', $ordre)
