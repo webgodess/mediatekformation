@@ -82,7 +82,7 @@ class AdminFormationsController extends AbstractController
     public function showOne($id): Response
     {
         $formation = $this->formationRepository->find($id);
-        return $this->render("pages/admin/formation.html.twig", [
+        return $this->render("pages/admin/admin.formation.html.twig", [
             'formation' => $formation
         ]);
     }
