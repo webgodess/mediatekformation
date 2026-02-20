@@ -21,7 +21,6 @@ class FormationType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('videoId')
-            ->add('date')
             ->add('playlist', EntityType::class, [
                 'class' => Playlist::class,
                 'choice_label' => 'name',
