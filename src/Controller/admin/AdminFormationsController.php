@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\admin;
 
+use App\Entity\Formation;
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -86,5 +87,15 @@ class AdminFormationsController extends AbstractController
             'formation' => $formation
         ]);
     }
+
+    #[Route('/admin/formations/formation/{id}', name: 'admin.formations.remove')]
+
+    public function remove(Formation $formation): Response
+    {
+        $this->formationRepository->remove($formation);
+        $this->addFlash("success", "Formation supprimée");
+        return $this->redirectToRoute("admin.formations");
+    }
+
 
 }
