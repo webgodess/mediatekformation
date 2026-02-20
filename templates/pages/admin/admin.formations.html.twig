@@ -52,7 +52,9 @@
                     <a href="{{ path('admin.formations.sort', {champ:'publishedAt', ordre:'DESC'}) }}" class="btn btn-info btn-sm active">></a>                    
                 </th>
                 <th class="text-center align-top" scope="col">
-                    &nbsp;
+                      <a href="#" class="btn btn-success">
+            <i class="fas fa-plus"></i> Ajouter une formation
+        </a>
                 </th>
             </tr>
         </thead>
@@ -81,14 +83,21 @@
                                 <img src="{{ formation.miniature }}" alt="capture miniature de la formation {{formation.title}}">
                             </a>
                         {% endif %}
-                        <td>
-                        <button type="button" class="btn btn-danger mb-2">
-  <i class="fas fa-trash"></i> Supprimer
-</button>
-                        <button type="button" class="btn btn-success">
-                          <i class="fas fa-plus"></i> Ajouter
-                        </button>
-                        </td>
+                        
+                    </td>
+                    <td>
+                       <a href="#" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Supprimer
+                       </a>
+
+                       
+                    </td>
+                     <td>
+                       <a href="#" class="btn btn-warning">
+                        <i class="fas fa-edit"></i>Modfier
+                       </a>
+
+                       
                     </td>
                 </tr>
             {% endfor %}
