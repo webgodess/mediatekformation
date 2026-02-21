@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\FormationType;
 
 /**
  * Controleur des formations
@@ -88,7 +89,7 @@ class AdminFormationsController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/formations/formation/{id}', name: 'admin.formations.remove')]
+    #[Route('/admin/formations/formation/{id}/remove', name: 'admin.formations.remove')]
 
     public function remove(Formation $formation): Response
     {
@@ -98,4 +99,23 @@ class AdminFormationsController extends AbstractController
     }
 
 
+
+    #[Route('/admin/formations/add', name: 'admin.formations.add')]
+    public function add(Request $request): Response
+    {
+        $formation = new Formation();
+        $form = $this->createForm(FormationType::class, $formation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->formationRepository->add($formation);
+            $this->addFlash("success", "Formation ajoutée");
+            return $this->redirectToRoute('admin.formations');
+        }
+        return $this->render("pages/admin/admin.formations/add.html.twig", [
+            'form' => $form->createView()
+        ]);
+    }
+
 }
+
