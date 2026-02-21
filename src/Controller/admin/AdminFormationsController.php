@@ -113,7 +113,7 @@ class AdminFormationsController extends AbstractController
             return $this->redirectToRoute('admin.formations');
         }
         return $this->render("pages/admin/admin.formations/add.html.twig", [
-            'form' => $form->createView()
+            'form' => $form
         ]);
     }
 
