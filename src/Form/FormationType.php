@@ -45,7 +45,7 @@ class FormationType extends AbstractType
                     )
                 ]
             ])
-            ->add('save', SubmitType::class, ['label' => 'Ajouter formation'])
+            ->add('save', SubmitType::class, ['label' => 'Soumettre'])
         ;
     }
 
