@@ -94,6 +94,11 @@ class AdminFormationsController extends AbstractController
     public function remove(Formation $formation): Response
     {
         $this->formationRepository->remove($formation);
+        $playlist = $formation->getPlaylist();
+        if ($playlist !== null) {
+            $playlist->removeFormation($formation);
+        }
+
         $this->addFlash("success", "Formation supprimée");
         return $this->redirectToRoute("admin.formations");
     }
@@ -114,6 +119,24 @@ class AdminFormationsController extends AbstractController
         }
         return $this->render("pages/admin/admin.formations/add.html.twig", [
             'form' => $form
+        ]);
+    }
+
+    #[Route('/admin/formations/formation/{id}/edit', name: 'admin.formations.edit')]
+    public function edit(Request $request, Formation $formation): Response
+    {
+
+        $form = $this->createForm(FormationType::class, $formation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->formationRepository->add($formation);
+            $this->addFlash("success", "Formation modifiée");
+            return $this->redirectToRoute('admin.formations');
+        }
+        return $this->render("pages/admin/admin.formations/edit.html.twig", [
+            'form' => $form,
+            'formation' => $formation
         ]);
     }
 
