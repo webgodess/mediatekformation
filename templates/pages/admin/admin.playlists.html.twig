@@ -40,6 +40,9 @@
                 </th>
                 <th class="text-center align-top" scope="col">
                     &nbsp;
+                </th>	
+                <th class="text-center align-top" scope="col">
+                  <button>Ajouter</button>
                 </th>				
             </tr>
         </thead>
@@ -59,11 +62,31 @@
                                 
                                     &nbsp;{{ category }}                                  
                                 {% endfor %}
-                        </td>            					
+                        </td>
+                               					
                         <td class="text-center">
                             <a href="{{ path('playlists.showone', {id:playlist.id}) }}" class="btn btn-secondary">Voir détail</a>
-                        </td> 					
+                        </td> 
+                          <td>
+                       <a href="#" class="btn btn-warning">
+                        <i class="fas fa-edit"></i>Modifier
+                       </a>
+
+                       
+                    </td>
+                           <td>
+                       
+                         <form action="{{ path('admin.playlists.remove', {'id': playlist.id}) }}" method="post" style="display: inline;">
+                         <button class="btn btn-danger" type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement {{playlist.name}} ?')">Delete</button>
+                         </form>
+                     
+                       </a>
+
+                       
+                    </td>
+                      					
                     </tr>
+                    
                	
             {% endfor %}
         </tbody>
