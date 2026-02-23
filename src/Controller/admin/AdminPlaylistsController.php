@@ -108,7 +108,7 @@ class AdminPlaylistsController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/playlists/add', name: 'admin.playlists.add')]
+    #[Route('/admin/playlists/add', name: 'admin.playlists.add', methods: ['GET', 'POST'])]
     public function add(Request $request): Response
     {
         $playlist = new playlist();
