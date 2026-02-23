@@ -1,0 +1,71 @@
+{% extends "baseback.html.twig" %}
+{% block body %}
+    <table class="table table-striped">
+    <caption>Liste des playlists</caption>
+        <thead>
+            <tr>
+                <th class="text-left align-top" scope="col">
+                    playlist<br />
+                    <a href="{{ path('admin.playlists.sort', {champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active"><</a>
+                    <a href="{{ path('admin.playlists.sort', {champ:'name', ordre:'DESC'}) }}" class="btn btn-info btn-sm active">></a>
+                    <form class="form-inline mt-1" method="POST" action="{{ path('playlists.findallcontain', {champ:'name'}) }}">
+                        <div class="form-group mr-1 mb-2">
+                            <input type="text" class="sm" name="recherche" 
+                                   value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('filtre_name') }}">
+                            <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
+                        </div>
+                    </form>                    
+                </th>
+                 <th class="text-left align-top" scope="col">
+                    Nombre de formations<br />
+                    <a href="{{ path('admin.playlists.sort', {champ:'nombreFormations', ordre:'ASC'}) }}" class="btn btn-info btn-sm active"><</a>
+                    <a href="{{ path('admin.playlists.sort', {champ:'nombreFormations', ordre:'DESC'}) }}" class="btn btn-info btn-sm active">></a>                 
+                </th>
+                <th class="text-left align-top" scope="col">
+                    catégories
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin.playlists.findallcontain', {champ:'id', table:'categories'}) }}">
+                        <select class="form-select form-select-sm" name="recherche" id="recherche" onchange="this.form.submit()">
+                            <option value=""></option>
+                            {% for categorie in categories %}
+                                <option 
+                                    {% if valeur|default and valeur==categorie.id %} 
+                                        selected
+                                    {% endif %} 
+                                    value="{{ categorie.id }}">{{ categorie.name }}
+                                </option>
+                            {% endfor %}
+                        </select>                    
+                    </form>            
+                </th>
+                <th class="text-center align-top" scope="col">
+                    &nbsp;
+                </th>				
+            </tr>
+        </thead>
+        <tbody>
+            <!-- boucle sur les playlists -->
+            {% for playlist in playlists%}
+                    <tr class="align-middle">
+                        <td>
+                            <h5 class="text-info">
+                                {{ playlist.name }}
+                            </h5>
+                        </td>  
+                        <td class="align-middle">{{ playlist.nombreFormations }}</td>                
+                        <td class="text-left">
+                            {% set categories = playlist.categoriesplaylist %}
+                            {% for category in categories %}
+                                
+                                    &nbsp;{{ category }}                                  
+                                {% endfor %}
+                        </td>            					
+                        <td class="text-center">
+                            <a href="{{ path('playlists.showone', {id:playlist.id}) }}" class="btn btn-secondary">Voir détail</a>
+                        </td> 					
+                    </tr>
+               	
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
