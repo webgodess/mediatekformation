@@ -111,12 +111,12 @@ class AdminPlaylistsController extends AbstractController
     #[Route('/admin/playlists/add', name: 'admin.playlists.add', methods: ['GET', 'POST'])]
     public function add(Request $request): Response
     {
-        $playlist = new playlist();
+        $playlist = new Playlist();
         $form = $this->createForm(PlaylistType::class, $playlist);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->formationRepository->add($playlist);
+            $this->playlistRepository->add($playlist);
             $this->addFlash("success", "playlist ajoutée");
             return $this->redirectToRoute('admin.playlists');
         }
@@ -127,12 +127,14 @@ class AdminPlaylistsController extends AbstractController
 
 
     #[Route('/admin/playlists/playlist/{id}/remove', name: 'admin.playlists.remove', methods: ['POST'])]
-    public function remove($id): Response
+    public function remove(Playlist $playlist): Response
     {
-        $formations = $this->playlistRepository->getFormations();
-        if ($formations === null) {
-            $this->playlistRepository->remove($id);
+
+        if ($playlist->getNombreFormations() === 0) {
+            $this->playlistRepository->remove($playlist);
             $this->addFlash("success", "Playlist supprimée");
+        } else {
+            $this->addFlash("error", "Impossible de supprimer une playlist qui contient des formations");
         }
 
         return $this->redirectToRoute('admin.playlists');
@@ -140,10 +142,21 @@ class AdminPlaylistsController extends AbstractController
 
 
     #[Route('/admin/playlists/playlist/{id}/edit', name: 'admin.playlists.edit')]
-    public function edit($id): Response
+    public function edit(Request $request, Playlist $playlist): Response
     {
 
-        return $this->redirectToRoute('admin.playlists');
+        $form = $this->createForm(PlaylistType::class, $playlist);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->playlistRepository->add($playlist);
+            $this->addFlash("success", "playlist modifiée");
+            return $this->redirectToRoute('admin.playlists');
+        }
+        return $this->render("pages/admin/admin.playlists/edit.html.twig", [
+            'form' => $form,
+            'playlist' => $playlist
+        ]);
     }
 
 }

@@ -77,7 +77,7 @@
                          <button class="btn btn-warning" type="submit"><i class="fa-solid fa-edit"></i></button>
                          </form> 
 
-                          <form action="{{ path('admin.playlists.remove', {'id': playlist.id}) }}" method="get" style="display: inline;">
+                          <form action="{{ path('admin.playlists.remove', {'id': playlist.id}) }}" method="post" style="display: inline;">
                          <button class="btn btn-danger" type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement {{playlist.name}} ?')"><i class="fa-solid fa-trash"></i></button>
                          </form>
 
