@@ -42,7 +42,9 @@
                     &nbsp;
                 </th>	
                 <th class="text-center align-top" scope="col">
-                  <button>Ajouter</button>
+                 <form action="{{ path('admin.playlists.add') }}" method="get" style="display: inline;">
+                         <button class="btn btn-success" type="submit"><i class="fa-solid fa-plus"></i></button>
+                         </form>
                 </th>				
             </tr>
         </thead>
@@ -67,20 +69,18 @@
                         <td class="text-center">
                             <a href="{{ path('playlists.showone', {id:playlist.id}) }}" class="btn btn-secondary">Voir détail</a>
                         </td> 
-                          <td>
-                       <a href="#" class="btn btn-warning">
-                        <i class="fas fa-edit"></i>Modifier
-                       </a>
 
-                       
-                    </td>
+                          
                            <td>
-                       
-                         <form action="{{ path('admin.playlists.remove', {'id': playlist.id}) }}" method="post" style="display: inline;">
-                         <button class="btn btn-danger" type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement {{playlist.name}} ?')">Delete</button>
-                         </form>
                      
-                       </a>
+                      <form action="{{ path('admin.playlists.edit', {'id': playlist.id}) }}" method="post" style="display: inline;">
+                         <button class="btn btn-warning" type="submit"><i class="fa-solid fa-edit"></i></button>
+                         </form> 
+
+                          <form action="{{ path('admin.playlists.remove', {'id': playlist.id}) }}" method="get" style="display: inline;">
+                         <button class="btn btn-danger" type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement {{playlist.name}} ?')"><i class="fa-solid fa-trash"></i></button>
+                         </form>
+
 
                        
                     </td>
