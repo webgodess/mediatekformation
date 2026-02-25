@@ -133,7 +133,7 @@ class AdminPlaylistsController extends AbstractController
     {
         $token = $request->request->get('token');
 
-        if ($this->isCsrfTokenValid('delete-playlist-' . $playlist->getId(), $token)) {
+        if ($this->isCsrfTokenValid('delete-playlist' . $playlist->getId(), $token)) {
             if ($playlist->getNombreFormations() === 0) {
                 $this->playlistRepository->remove($playlist);
                 $this->addFlash("success", "Playlist supprimée");
