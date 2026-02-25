@@ -9,7 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use App\Form\PlaylistType;
+
 
 /**
  * Description of PlaylistsController
@@ -127,21 +129,29 @@ class AdminPlaylistsController extends AbstractController
 
 
     #[Route('/admin/playlists/playlist/{id}/remove', name: 'admin.playlists.remove', methods: ['POST'])]
-    public function remove(Playlist $playlist): Response
+    public function remove(Playlist $playlist, Request $request): Response
     {
+        $token = $request->request->get('token');
 
-        if ($playlist->getNombreFormations() === 0) {
-            $this->playlistRepository->remove($playlist);
-            $this->addFlash("success", "Playlist supprimée");
+        if ($this->isCsrfTokenValid('delete-playlist-' . $playlist->getId(), $token)) {
+            if ($playlist->getNombreFormations() === 0) {
+                $this->playlistRepository->remove($playlist);
+                $this->addFlash("success", "Playlist supprimée");
+            } else {
+                $this->addFlash("error", "Impossible de supprimer une playlist qui contient des formations");
+            }
+
+
         } else {
-            $this->addFlash("error", "Impossible de supprimer une playlist qui contient des formations");
+            $this->addFlash("error", "Token CSRF invalide");
+            return $this->redirectToRoute('admin.playlists');
         }
 
         return $this->redirectToRoute('admin.playlists');
     }
 
 
-    #[Route('/admin/playlists/playlist/{id}/edit', name: 'admin.playlists.edit')]
+    #[Route('/admin/playlists/playlist/{id}/edit', name: 'admin.playlists.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Playlist $playlist): Response
     {
 
@@ -154,7 +164,7 @@ class AdminPlaylistsController extends AbstractController
             return $this->redirectToRoute('admin.playlists');
         }
         return $this->render("pages/admin/admin.playlists/edit.html.twig", [
-            'form' => $form,
+            'form' => $form->createView(),
             'playlist' => $playlist
         ]);
     }

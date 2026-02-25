@@ -67,17 +67,18 @@
                         </td>
                                					
                         <td class="text-center">
-                            <a href="{{ path('playlists.showone', {id:playlist.id}) }}" class="btn btn-secondary">Voir détail</a>
+                            <a href="{{ path('admin.playlists.showone', {id:playlist.id}) }}" class="btn btn-secondary">Voir détail</a>
                         </td> 
 
                           
                            <td>
                      
-                      <form action="{{ path('admin.playlists.edit', {'id': playlist.id}) }}" method="post" style="display: inline;">
+                      <form action="{{ path('admin.playlists.edit', {'id': playlist.id}) }}" method="get" style="display: inline;">
                          <button class="btn btn-warning" type="submit"><i class="fa-solid fa-edit"></i></button>
                          </form> 
 
                           <form action="{{ path('admin.playlists.remove', {'id': playlist.id}) }}" method="post" style="display: inline;">
+                          <input type="hidden" name="token" value="{{ csrf_token('delete-playlist'~ playlist.id) }}">
                          <button class="btn btn-danger" type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement {{playlist.name}} ?')"><i class="fa-solid fa-trash"></i></button>
                          </form>
 

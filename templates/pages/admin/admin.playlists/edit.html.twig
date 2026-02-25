@@ -7,11 +7,36 @@
 {% block javascripts %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 {% endblock %}
-{{ form_start(form) }}
-{{ form_widget(form) }}
 
-<button class="btn btn-success" type="submit">Save</button>
-<a href="{{ path('admin.playlists') }}" class="btn btn-danger">Cancel</a>
-
-{{ form_end(form) }}
+<div class="row mt-3">
+    <div class="col-md-4">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success" type="submit">Save</button>
+        <a href="{{ path('admin.playlists') }}" class="btn btn-danger">Cancel</a>
+        {{ form_end(form) }}
+    </div>
+    <div class="col-md-8">
+        <div class="col">
+            {% for formation in playlist.formations %}
+                <div class="row mt-1">
+                    <div class="col-md-auto">
+                        {% if formation.miniature %}
+                            <a href="{{ path('admin.formations.showone', {id:formation.id}) }}">
+                                <img src="{{ formation.miniature }}" 
+                                     alt="capture de la formation {{ formation.title }}">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-auto">
+                        <a href="{{ path('admin.formations.showone', {id:formation.id}) }}"
+                           class="link-secondary text-decoration-none">
+                            {{ formation.title }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div> <!-- This closing div was missing! -->
 {% endblock %}
