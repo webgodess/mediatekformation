@@ -8,7 +8,7 @@
                     playlist<br />
                     <a href="{{ path('admin.playlists.sort', {champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active"><</a>
                     <a href="{{ path('admin.playlists.sort', {champ:'name', ordre:'DESC'}) }}" class="btn btn-info btn-sm active">></a>
-                    <form class="form-inline mt-1" method="POST" action="{{ path('playlists.findallcontain', {champ:'name'}) }}">
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin.playlists.findallcontain', {champ:'name'}) }}">
                         <div class="form-group mr-1 mb-2">
                             <input type="text" class="sm" name="recherche" 
                                    value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
@@ -82,8 +82,6 @@
                          <button class="btn btn-danger" type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement {{playlist.name}} ?')"><i class="fa-solid fa-trash"></i></button>
                          </form>
 
-
-                       
                     </td>
                       					
                     </tr>
