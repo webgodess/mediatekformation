@@ -61,7 +61,7 @@ class AdminCategoriesController extends AbstractController
     public function remove(Categorie $categorie, Request $request): Response
     {
         $formations = $categorie->getFormations();
-        $token = $request->getPayload()->get('token');
+        $token = $request->getPayload()->get('_token');
 
         if ($this->isCsrfTokenValid('delete-categorie', $token)) {
             if (count($formations) === 0) {
@@ -88,7 +88,7 @@ class AdminCategoriesController extends AbstractController
     {
         $name = $request->get("name");
         $categorieExists = $this->categorieRepository->findOneBy(["name" => $name]);
-        $token = $request->getPayload()->get('token');
+        $token = $request->getPayload()->get('_token');
 
         if (!$this->isCsrfTokenValid('add-categorie', $token)) {
             $this->addFlash("danger", "Token CSRF invalide");
