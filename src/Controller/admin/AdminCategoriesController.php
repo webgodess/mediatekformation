@@ -49,65 +49,46 @@ class AdminCategoriesController extends AbstractController
     public function index(): Response
     {
         $categories = $this->categorieRepository->findAll();
-        $formations = $this->formationRepository->findAll();
         return $this->render(self::RENDER_PATH, [
-            'categories' => $categories,
-            'formations' => $formations
-        ]);
-    }
-
-    #[Route('/admin/categories/tri/{champ}/{ordre}/{table}', name: 'admin.categories.sort')]
-    public function sort($champ, $ordre, $table = ""): Response
-    {
-        $categories = $this->categorieRepository->findAllOrderBy($champ, $ordre, $table);
-        $formations = $this->formationRepository->findAll();
-        return $this->render(self::RENDER_PATH, [
-            'categories' => $categories,
-            'formations' => $formations
-        ]);
-    }
-
-    #[Route('/admin/categories/recherche/{champ}/{table}', name: 'admin.categories.findallcontain')]
-    public function findAllContain($champ, Request $request, $table = ""): Response
-    {
-        $valeur = $request->get("recherche");
-        $formations = $this->formationRepository->findByContainValue($champ, $valeur, $table);
-        $categories = $this->categorieRepository->findAll();
-        return $this->render(self::RENDER_PATH, [
-            'categories' => $categories,
-            'formations' => $formations,
-            'valeur' => $valeur,
-            'table' => $table
-        ]);
-    }
-
-    #[Route('/admin/categories/categorie/{id}', name: 'admin.categories.showone')]
-    public function showOne($id): Response
-    {
-        $categorie = $this->categorieRepository->find($id);
-        return $this->render("pages/admin/admin.categorie.html.twig", [
-            'categorie' => $categorie
+            'categories' => $categories
         ]);
     }
 
     #[Route('/admin/categories/categorie/{id}/remove', name: 'admin.categories.remove')]
 
-    public function remove(categorie $categorie): Response
+    public function remove(Categorie $categorie): Response
     {
-        $this->categorieRepository->remove($categorie);
-        #$playlist = $categorie->getFormations();
+        $formations = $categorie->getFormations();
+        if (count($formations) === 0) {
+            $this->categorieRepository->remove($categorie);
+            $this->addFlash("success", "Catégorie supprimée avec succès");
+
+        } else {
+            $this->addFlash("danger", "Impossible de supprimer une catégorie qui contient des formations");
+        }
 
 
-        $this->addFlash("success", "categorie supprimée");
         return $this->redirectToRoute("admin.categories");
+
     }
 
-
-
-    #[Route('/admin/categories/add', name: 'admin.categories.add')]
+    #[Route('/admin/categories/categorie/add', name: 'admin.categories.add', methods: ['POST'])]
     public function add(Request $request): Response
     {
-        return "to be added";
+        $name = $request->get("name");
+
+        if (trim($name) !== "") {
+            $categorie = new Categorie();
+            $categorie->setName($request->get("name"));
+            $this->categorieRepository->add($categorie);
+            $this->addFlash("success", "Catégorie ajoutée avec succès");
+
+        } else {
+            $this->addFlash("danger", "Le nom de la catégorie ne peut pas être vide");
+        }
+
+        return $this->redirectToRoute("admin.categories");
+
     }
 
 }

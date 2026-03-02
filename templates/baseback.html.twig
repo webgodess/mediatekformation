@@ -34,8 +34,21 @@
             </div>
         </nav>        
     </div>
+    <div class="container mt-3">
+    
+{% for label, messages in app.flashes(['danger', 'warning'])  %}
+    {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+    </div>
 {% endblock %}
-{% block body %}{% endblock %}
+
+{% block body %}
+
+{% endblock %}
 {% block footer %}
     <div class="container text-center">
         <footer>
