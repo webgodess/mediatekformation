@@ -23,7 +23,7 @@ Catégories</caption>
             <form action="{{ path('admin.categories.add') }}" method="post" style="display: inline;">
                 <label for="cname">Category Name: </label>
                 <input type="text" id="cname" name="name">
-                <input type="hidden" name="token" value="{{ csrf_token('add-categorie') }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('add-categorie') }}">
                          <button class="btn btn-success" type="submit" value="Submit"><i class="fas fa-plus"></i></button>
                          </form>
         
@@ -38,7 +38,7 @@ Catégories</caption>
                     </td>
                     <td class="text-center">
                         <form action="{{ path('admin.categories.remove', {id: categorie.id}) }}" method="post" style="display: inline;">
-                            <input type="hidden" name="token" value="{{ csrf_token('delete-categorie') }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete-categorie') }}">
                             <button class="btn btn-danger btn-sm" type="submit" 
                                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer « {{ categorie.name }} » ?')">
                                 <i class="fas fa-trash"></i>
