@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
+
 
 /**
  * Controleur des formations
@@ -56,16 +58,25 @@ class AdminCategoriesController extends AbstractController
 
     #[Route('/admin/categories/categorie/{id}/remove', name: 'admin.categories.remove')]
 
-    public function remove(Categorie $categorie): Response
+    public function remove(Categorie $categorie, Request $request): Response
     {
         $formations = $categorie->getFormations();
-        if (count($formations) === 0) {
-            $this->categorieRepository->remove($categorie);
-            $this->addFlash("success", "Catégorie supprimée avec succès");
+        $token = $request->getPayload()->get('token');
+
+        if ($this->isCsrfTokenValid('delete-categorie', $token)) {
+            if (count($formations) === 0) {
+                $this->categorieRepository->remove($categorie);
+                $this->addFlash("success", "Catégorie supprimée avec succès");
+
+            } else {
+                $this->addFlash("danger", "Impossible de supprimer une catégorie qui contient des formations");
+            }
 
         } else {
-            $this->addFlash("danger", "Impossible de supprimer une catégorie qui contient des formations");
+            $this->addFlash("danger", "Token CSRF invalide");
+            return $this->redirectToRoute("admin.categories");
         }
+
 
 
         return $this->redirectToRoute("admin.categories");
@@ -76,16 +87,35 @@ class AdminCategoriesController extends AbstractController
     public function add(Request $request): Response
     {
         $name = $request->get("name");
+        $categorieExists = $this->categorieRepository->findOneBy(["name" => $name]);
+        $token = $request->getPayload()->get('token');
 
-        if (trim($name) !== "") {
-            $categorie = new Categorie();
-            $categorie->setName($request->get("name"));
-            $this->categorieRepository->add($categorie);
-            $this->addFlash("success", "Catégorie ajoutée avec succès");
-
+        if (!$this->isCsrfTokenValid('add-categorie', $token)) {
+            $this->addFlash("danger", "Token CSRF invalide");
+            return $this->redirectToRoute("admin.categories");
         } else {
-            $this->addFlash("danger", "Le nom de la catégorie ne peut pas être vide");
+
+            if ($categorieExists) {
+                $this->addFlash("danger", "Une catégorie avec ce nom existe déjà");
+                return $this->redirectToRoute("admin.categories");
+            }
+
+
+            if (trim($name) !== "") {
+                $categorie = new Categorie();
+                $categorie->setName($request->get("name"));
+                $this->categorieRepository->add($categorie);
+                $this->addFlash("success", "Catégorie ajoutée avec succès");
+
+            } else {
+                $this->addFlash("danger", "Le nom de la catégorie ne peut pas être vide");
+            }
+
         }
+
+
+
+
 
         return $this->redirectToRoute("admin.categories");
 
