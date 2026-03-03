@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Tests\Entity\Validations;
+use App\Entity\Formation;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+
+class FormationValidationsTest extends KernelTestCase
+{
+    public function getFormation(): Formation
+    {
+        return (new Formation())
+            ->setTitle("DevOps")
+            ->setDescription("Formation DevOps pour apprendre à automatiser les processus de développement et de déploiement.")
+            ->setVideoId("dQw4w9WgXcQ");
+    }
+
+    public function testValidDateFormation()
+    {
+        $formation = $this->getFormation()->setPublishedAt(new \DateTime("2026-01-21"));
+        $this->assertErrors($formation, 0);
+    }
+
+    public function assertErrors(Formation $formation, int $nbErrors): void
+    {
+        self::bootKernel();
+        $validator = self::getContainer()->get(ValidatorInterface::class);
+        $error = $validator->validate($formation);
+        $this->assertCount($nbErrors, $error);
+    }
+
+    public function testInvalidDateFormation()
+    {
+        $formation = $this->getFormation()->setPublishedAt(new \DateTime("2027-01-21"));
+        $this->assertErrors($formation, 1);
+    }
+
+
+}
+
