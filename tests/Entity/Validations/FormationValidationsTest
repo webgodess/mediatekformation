@@ -22,7 +22,7 @@ class FormationValidationsTest extends KernelTestCase
         $this->assertErrors($formation, 0);
     }
 
-    public function assertErrors(Formation $formation, int $nbErrors): void
+    public function assertErrors(Formation $formation, int $nbErrors, string $message = ""): void
     {
         self::bootKernel();
         $validator = self::getContainer()->get(ValidatorInterface::class);
@@ -32,8 +32,8 @@ class FormationValidationsTest extends KernelTestCase
 
     public function testInvalidDateFormation()
     {
-        $formation = $this->getFormation()->setPublishedAt(new \DateTime("2027-01-21"));
-        $this->assertErrors($formation, 1);
+        $formation = $this->getFormation()->setPublishedAt(new \DateTime("2028-01-21"));
+        $this->assertErrors($formation, 1, "La date de publication doit être inférieure ou égale à la date actuelle.");
     }
 
 
