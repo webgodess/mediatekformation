@@ -88,18 +88,22 @@ class AdminFormationsController extends AbstractController
             'formation' => $formation
         ]);
     }
-
     #[Route('/admin/formations/formation/{id}/remove', name: 'admin.formations.remove')]
-
-    public function remove(Formation $formation): Response
+    public function remove(Formation $formation, Request $request): Response
     {
-        $this->formationRepository->remove($formation);
-        $playlist = $formation->getPlaylist();
-        if ($playlist !== null) {
-            $playlist->removeFormation($formation);
+        // Vérifier le token CSRF !
+        if (
+            $this->isCsrfTokenValid(
+                'delete-formation-' . $formation->getId(),
+                $request->request->get('token')
+            )
+        ) {
+            $this->formationRepository->remove($formation);
+            $this->addFlash("success", "Formation supprimée");
+        } else {
+            $this->addFlash("error", "Token invalide !");
         }
 
-        $this->addFlash("success", "Formation supprimée");
         return $this->redirectToRoute("admin.formations");
     }
 

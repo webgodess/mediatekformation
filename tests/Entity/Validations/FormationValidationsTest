@@ -18,7 +18,7 @@ class FormationValidationsTest extends KernelTestCase
 
     public function testValidDateFormation()
     {
-        $formation = $this->getFormation()->setPublishedAt(new \DateTime("2026-01-21"));
+        $formation = $this->getFormation()->setPublishedAt(new \DateTime("2026-01-21 17:00:12"));
         $this->assertErrors($formation, 0);
     }
 
