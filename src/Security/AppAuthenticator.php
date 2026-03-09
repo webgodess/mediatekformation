@@ -15,15 +15,27 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+/**
+ * Gère l'authentification des utilisateurs via un formulaire de connexion.
+ * Vérifie les identifiants et le token CSRF.
+ */
+
 class AppAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
+    /**
+     * Nom de la route de connexion utilisée pour la page login.
+     */
+
     public const LOGIN_ROUTE = 'app_login';
+
+
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
     }
+
 
     public function authenticate(Request $request): Passport
     {
@@ -40,14 +52,23 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         );
     }
 
+    /**
+     * Gère la redirection après une authentification réussie.
+     *
+     * @param Request        $request
+     * @param TokenInterface $token
+     * @param string         $firewallName
+     * @return Response|null La redirection vers la page cible ou la page d'accueil
+     */
+
+
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
+
         return new RedirectResponse($this->urlGenerator->generate('accueil'));
     }
 

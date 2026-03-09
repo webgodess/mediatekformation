@@ -7,6 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Entité représentant une catégorie.
+ * Une catégorie peut être associée à plusieurs formations (relation ManyToMany).
+ */
+
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
 {

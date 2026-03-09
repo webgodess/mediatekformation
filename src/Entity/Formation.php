@@ -9,6 +9,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Entité représentant une formation.
+ * Une formation appartient à une playlist (relation ManyToOne)
+ * et peut être associée à plusieurs catégories (relation ManyToMany).
+ */
+
 
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
 class Formation

@@ -8,6 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Entité représentant une playlist de formations.
+ * Une playlist peut contenir plusieurs formations (relation OneToMany).
+ */
+
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
 class Playlist
 {
@@ -74,7 +79,7 @@ class Playlist
      * retourne le nombre de formations dans la playlist
      * @return int
      */
-     public function getNombreFormations(): int
+    public function getNombreFormations(): int
     {
         return $this->formations->count();
     }
@@ -100,22 +105,22 @@ class Playlist
 
         return $this;
     }
-    
+
     /**
      * @return Collection<int, string>
      */
-    public function getCategoriesPlaylist() : Collection
+    public function getCategoriesPlaylist(): Collection
     {
         $categories = new ArrayCollection();
-        foreach($this->formations as $formation){
+        foreach ($this->formations as $formation) {
             $categoriesFormation = $formation->getCategories();
-            foreach($categoriesFormation as $categorieFormation) {
-                if(!$categories->contains($categorieFormation->getName())){
+            foreach ($categoriesFormation as $categorieFormation) {
+                if (!$categories->contains($categorieFormation->getName())) {
                     $categories[] = $categorieFormation->getName();
                 }
             }
         }
         return $categories;
     }
-        
+
 }
