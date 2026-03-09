@@ -100,7 +100,8 @@
                     </td>
                     <td>   
                         <form action="{{ path('admin.formations.remove', {'id': formation.id}) }}" 
-      method="post">
+      method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer la formation « {{ formation.title }} » ?')">
+      
     <input type="hidden" name="token" 
            value="{{ csrf_token('delete-formation-' ~ formation.id) }}">
     <button class="btn btn-danger" type="submit">🗑️</button>
