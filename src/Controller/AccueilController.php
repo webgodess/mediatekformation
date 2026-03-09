@@ -11,12 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @author emds
  */
+
 class AccueilController extends AbstractController
 {
 
     /**
      * @var FormationRepository
      */
+
     private $repository;
 
     /**
@@ -33,6 +35,7 @@ class AccueilController extends AbstractController
      * @return Response
      */
 
+
     #[Route('/', name: 'accueil')]
     public function index(): Response
     {
@@ -46,6 +49,7 @@ class AccueilController extends AbstractController
      * Affiche la page des conditions générales d'utilisation
      * @return Response
      */
+
 
     #[Route('/cgu', name: 'cgu')]
     public function cgu(): Response

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Description of PlaylistsController
+ * Controleur des playlists
  *
  * @author emds
  */
@@ -37,6 +37,12 @@ class PlaylistsController extends AbstractController
 
     private const RENDER_PATH = "pages/playlists.html.twig";
 
+    /**
+     * @param PlaylistRepository $playlistRepository
+     * @param CategorieRepository $categorieRepository
+     * @param FormationRepository $formationRepository
+     */
+
     public function __construct(
         PlaylistRepository $playlistRepository,
         CategorieRepository $categorieRepository,
@@ -48,9 +54,10 @@ class PlaylistsController extends AbstractController
     }
 
     /**
-     * @Route("/playlists", name="playlists")
+     * Affiche la liste de toutes les playlists
      * @return Response
      */
+
     #[Route('/playlists', name: 'playlists')]
     public function index(): Response
     {
@@ -61,6 +68,15 @@ class PlaylistsController extends AbstractController
             'categories' => $categories
         ]);
     }
+
+
+    /**
+     * Affiche les playlists triées
+     * @param string $champ champ sur lequel trier
+     * @param string $ordre ASC ou DESC
+     * @return Response
+     */
+
 
     #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
     public function sort($champ, $ordre): Response

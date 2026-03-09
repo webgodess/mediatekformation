@@ -7,20 +7,41 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repository pour l'entité Playlist.
+ * Donne des méthodes de requête personnalisées pour accéder aux playlists.
  * @extends ServiceEntityRepository<Playlist>
  */
 class PlaylistRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructeur du repository.
+     *
+     * @param ManagerRegistry $registry Le registre des gestionnaires d'entités Doctrine
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Playlist::class);
     }
+
+    /**
+     * Ajoute une nouvelle playlist à la base de données
+     *
+     * @param Playlist $entity L'entité Playlist à enregistrer
+     * @return void
+     */
 
     public function add(Playlist $entity): void
     {
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * Supprime une playlist de la base de données.
+     *
+     * @param Playlist $entity L'entité Playlist à supprimer
+     * @return void
+     */
 
     public function remove(Playlist $entity): void
     {
@@ -30,8 +51,8 @@ class PlaylistRepository extends ServiceEntityRepository
 
     /**
      * Retourne toutes les playlists triées sur le nom de la playlist
-     * @param type $champ
-     * @param type $ordre
+     * @param string $champ
+     * @param string $ordre
      * @return Playlist[]
      */
     public function findAllOrderByName($ordre): array
@@ -48,7 +69,7 @@ class PlaylistRepository extends ServiceEntityRepository
     /**
      * Retourne toutes les playlists triées par le nombre de formations
      *
-     * @param type $ordre
+     * @param string $ordre
      * @return Playlist[]
      */
     public function findAllOrderByNumberFormations($ordre): array
@@ -65,9 +86,9 @@ class PlaylistRepository extends ServiceEntityRepository
     /**
      * Enregistrements dont un champ contient une valeur
      * ou tous les enregistrements si la valeur est vide
-     * @param type $champ
-     * @param type $valeur
-     * @param type $table si $champ dans une autre table
+     * @param string $champ
+     * @param string $valeur
+     * @param string $table si $champ dans une autre table
      * @return Playlist[]
      */
     public function findByContainValue($champ, $valeur, $table = ""): array

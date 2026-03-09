@@ -12,31 +12,37 @@ use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 
 
 /**
- * Controleur des formations
+ * Controleur des formations côté admin
  *
- * @author emds
+ * @author s.n
  */
 
 class AdminCategoriesController extends AbstractController
 {
     /**
-     *
+     * Repository des catégories, utilisé pour accéder aux données des catégories.
      * @var CategorieRepository
      */
     private $categorieRepository;
 
     /**
-     *
+     * Repository des formations, utilisé pour vérifier les formations liées à une catégorie.
      * @var FormationRepository
      */
     private $formationRepository;
 
+
+
+    /**
+     * Chemin vers le template Twig utilisé pour la liste des catégories en administration.
+     */
+
     private const RENDER_PATH = "pages/admin/admin.categories.html.twig";
 
     /**
-     *
-     * @param CategorieRepository $categorieRepository
-     * @param FormationRepository $formationRepository
+     * Constructeur du contrôleur.
+     * @param CategorieRepository $categorieRepository Le repository pour accéder aux catégories
+     * @param FormationRepository $formationRepository Le repository pour accéder aux formations
      *
      */
 
@@ -47,6 +53,12 @@ class AdminCategoriesController extends AbstractController
 
     }
 
+    /**
+     * Affiche la liste complète de toutes les catégories
+     *
+     * @return Response La réponse HTTP contenant la vue de la liste des catégories
+     */
+
     #[Route('/admin/categories', name: 'admin.categories')]
     public function index(): Response
     {
@@ -55,6 +67,16 @@ class AdminCategoriesController extends AbstractController
             'categories' => $categories
         ]);
     }
+
+    /**
+     * Supprime une catégorie après validation du token CSRF.
+     * La suppression est refusée si la catégorie contient des formations associées.
+     * Redirige vers la liste des catégories avec un message de succès ou d'erreur.
+     *
+     * @param Categorie $categorie La catégorie à supprimer, résolue automatiquement par Symfony
+     * @param Request   $request   La requête HTTP contenant le token CSRF dans le corps de la requête
+     * @return Response La redirection vers la liste des catégories après traitement
+     */
 
     #[Route('/admin/categories/categorie/{id}/remove', name: 'admin.categories.remove')]
 
@@ -82,6 +104,16 @@ class AdminCategoriesController extends AbstractController
         return $this->redirectToRoute("admin.categories");
 
     }
+
+    /**
+     * Ajoute une nouvelle catégorie après validation du token CSRF.
+     * Vérifie que le nom n'est pas vide et qu'aucune catégorie du même nom n'existe déjà.
+     * Redirige vers la liste des catégories avec un message de succès ou d'erreur.
+     *
+     * @param Request $request La requête HTTP contenant le nom de la catégorie
+     *                         et le token CSRF dans le corps de la requête (méthode POST)
+     * @return Response La redirection vers la liste des catégories après traitement
+     */
 
     #[Route('/admin/categories/categorie/add', name: 'admin.categories.add', methods: ['POST'])]
     public function add(Request $request): Response
