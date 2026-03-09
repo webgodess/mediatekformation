@@ -13,11 +13,30 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+
+/**
+ * Formulaire de création et de modification d'une formation.
+ * Génère un formulaire Symfony lié à l'entité Formation avec les champs :
+ * - Titre (obligatoire)
+ * - Description (facultative)
+ * - Identifiant vidéo (obligatoire)
+ * - Playlist associée (obligatoire)
+ * - Catégories associées (facultatives, choix multiple)
+ * - Date de publication (obligatoire, ne peut pas être dans le futur)
+ */
 
 class FormationType extends AbstractType
 {
+
+    /**
+         * Construit le formulaire de création/modification d'une formation.
+
+         * @param FormBuilderInterface $builder
+         * @param array $options
+         * @return void
+         */
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

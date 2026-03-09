@@ -12,10 +12,21 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
-
+/**
+ * Classe de fixtures pour l'application.
+ * Permet de pré-remplir la base de données avec des données de test pour les entités User, Categorie, Formation et Playlist.
+ * @author s.n
+ */
 
 class AppFixtures extends Fixture
 {
+
+    /**
+     * Service de hachage des mots de passe, utilisé pour sécuriser le mot de passe de l'admin.
+     *
+     * @var UserPasswordHasherInterface
+     */
+
     private UserPasswordHasherInterface $hasher;
 
     public function __construct(UserPasswordHasherInterface $hasher)
@@ -23,11 +34,17 @@ class AppFixtures extends Fixture
         $this->hasher = $hasher;
     }
 
-    // ...
+    /**
+     * Constructeur de la classe AppFixtures.
+     *
+     * @param UserPasswordHasherInterface $hasher Le service de hachage des mots de passe
+     */
 
 
     public function load(ObjectManager $manager): void
     {
+        // Création de l'utilisateur admin
+
         $user = new User();
         $user->setUsername('admin');
         $user->setRoles(
@@ -38,6 +55,7 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
 
+        // Données pour les catégories, playlists et formations
 
         $names = ["Intelligence artificielle", "Développement web", "DevOps"];
         $categories = [];
@@ -58,6 +76,7 @@ class AppFixtures extends Fixture
             "2025-02-20"
         ];
 
+        // Création des 3 catégories
 
         for ($i = 0; $i < 3; $i++) {
             $categorie = new Categorie();
@@ -67,6 +86,8 @@ class AppFixtures extends Fixture
 
         }
 
+        // Création des 4 playlists
+
         for ($i = 0; $i < 4; $i++) {
             $playlist = new Playlist();
             $playlist->setName($listNames[$i]);
@@ -74,6 +95,9 @@ class AppFixtures extends Fixture
             $manager->persist($playlist);
 
         }
+
+        // Création des 10 formations et association aux playlists et catégories
+        // Chaque formation est associée à une playlist ($i % 4) et une catégorie ($i % 3)
 
         for ($i = 0; $i < 10; $i++) {
             $formation = new Formation();
@@ -86,6 +110,8 @@ class AppFixtures extends Fixture
             $formations[] = $formation;
             $manager->persist($formation);
         }
+
+        // Exécution de toutes les insertions en base de données
 
         $manager->flush();
 
