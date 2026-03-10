@@ -5,6 +5,9 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     curl \
     libcurl4-openssl-dev \
+    git \
+    unzip \
+    zip \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
