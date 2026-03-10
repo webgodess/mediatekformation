@@ -19,4 +19,4 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 EXPOSE 80
 
-CMD ["php", "-S", "0.0.0.0:80", "-t", "public"]
+CMD ["php", "-d", "display_errors=0", "-d", "error_reporting=24575", "-S", "0.0.0.0:80", "-t", "public"]
