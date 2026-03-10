@@ -1,21 +1,21 @@
-FROM php:8.5-fpm
+FROM php:8.3-cli
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    curl \
-    libcurl4-openssl-dev \
     git \
     unzip \
     zip \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-enable pdo_mysql \
+    libzip-dev \
+    curl \
+    && docker-php-ext-install pdo pdo_mysql zip \
     && rm -rf /var/lib/apt/lists/*
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 EXPOSE 80
 
