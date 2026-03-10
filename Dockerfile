@@ -2,7 +2,12 @@ FROM php:8.5-fpm
 
 WORKDIR /app
 
-RUN docker-php-ext-install pdo_mysql curl mbstring
+RUN apt-get update && apt-get install -y \
+    curl \
+    libcurl4-openssl-dev \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-enable pdo_mysql \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY . .
 
