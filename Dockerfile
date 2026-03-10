@@ -15,6 +15,10 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
+ENV APP_ENV=prod
+ENV APP_DEBUG=0
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 EXPOSE 80
