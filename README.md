@@ -93,7 +93,7 @@ L’application a été mise en ligne sur **Railway** avec :
 
 La page playlists affiche désormais le nombre de formations par playlist avec possibilité de tri.
 
-<img width="727" height="413" alt="Screenshot 2026-03-12 053428" src="https://github.com/user-attachments/assets/695837d8-6bf0-4888-969d-2813156947ca" />
+<img width="749" height="413" alt="Screenshot 2026-03-12 055327" src="https://github.com/user-attachments/assets/9f7895af-be86-4e6c-aaf2-eedf37925e82" />
 
 
 
