@@ -125,32 +125,8 @@ L’accès au back office est sécurisé par un formulaire de connexion.
 
 <img width="758" height="412" alt="Screenshot 2026-03-12 053931" src="https://github.com/user-attachments/assets/5e2e68ab-d91f-4452-b801-4026a174945b" />
 
-
 ---
 
-## Technologies utilisées
-
-- **PHP**
-- **Symfony 6.4**
-- **Twig**
-- **MySQL**
-- **Doctrine**
-- **HTML / CSS**
-- **Bootstrap**
-- **Git / GitHub**
-- **Railway**
-- **MySQL Workbench**
-- **Shell script**
-
----
-
-## Base de données
-
-L’application utilise une base de données **MySQL**.
-
-Le script SQL de la base est présent dans le dépôt et permet de recréer les données nécessaires au fonctionnement de l’application en local.
-
----
 
 ## Installation en local
 
