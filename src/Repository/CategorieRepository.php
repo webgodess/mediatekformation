@@ -55,6 +55,20 @@ class CategorieRepository extends ServiceEntityRepository
     }
 
     /**
+     * Retourne les catégories avec une limite de résultats.
+     *
+     * @param int $limit Le nombre maximum de catégories à retourner
+     * @return array Un tableau d'entités Categorie
+     */
+    public function findAllWithLimit($limit = 50): array
+    {
+        return $this->createQueryBuilder('c')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Retourne la liste des catégories des formations d'une playlist
      * triées par nom de catégorie par ordre croissant.
      * @param int $idPlaylist L'identifiant de la playlist dont on veut les catégories
