@@ -132,6 +132,21 @@ class FormationRepository extends ServiceEntityRepository
     }
 
     /**
+     * Retourne les formations les plus récentes avec une limite de résultats.
+     *
+     * @param int $limit Le nombre maximum de formations à retourner
+     * @return Formation[] Un tableau d'entités Formation
+     */
+    public function findAllWithLimit($limit = 50): array
+    {
+        return $this->createQueryBuilder('f')
+            ->orderBy('f.publishedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Retourne la liste des formations d'une playlist
      * triées par date de publication croissante.
      * 
