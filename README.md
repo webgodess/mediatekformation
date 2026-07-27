@@ -93,57 +93,40 @@ L’application a été mise en ligne sur **Railway** avec :
 
 La page playlists affiche désormais le nombre de formations par playlist avec possibilité de tri.
 
-![Capture front office playlists](mettre-ici-une-image)
+<img width="749" height="413" alt="Screenshot 2026-03-12 055327" src="https://github.com/user-attachments/assets/9f7895af-be86-4e6c-aaf2-eedf37925e82" />
+
+
 
 ### Back office – Formations
 
 La partie administration permet de gérer les formations.
 
-![Capture back office formations](mettre-ici-une-image)
+<img width="754" height="413" alt="Screenshot 2026-03-12 054424" src="https://github.com/user-attachments/assets/c912af5c-a931-4939-a4f1-2b02ba6eba1a" />
+
+
 
 ### Back office – Playlists
 
-La partie administration permet de gérer les playlists.
+La partie administration permet d' ajouter des playlists.
 
-![Capture back office playlists](mettre-ici-une-image)
+<img width="760" height="410" alt="Screenshot 2026-03-12 054241" src="https://github.com/user-attachments/assets/f9ddce07-71e1-4175-875b-ef846215a520" />
+
 
 ### Back office – Catégories
 
 La partie administration permet de gérer les catégories.
 
-![Capture back office catégories](mettre-ici-une-image)
+<img width="764" height="410" alt="Screenshot 2026-03-12 054110" src="https://github.com/user-attachments/assets/2f48614a-5315-4fa8-973b-a705892a21d1" />
+
 
 ### Authentification
 
 L’accès au back office est sécurisé par un formulaire de connexion.
 
-![Capture connexion admin](mettre-ici-une-image)
+<img width="758" height="412" alt="Screenshot 2026-03-12 053931" src="https://github.com/user-attachments/assets/5e2e68ab-d91f-4452-b801-4026a174945b" />
 
 ---
 
-## Technologies utilisées
-
-- **PHP**
-- **Symfony 6.4**
-- **Twig**
-- **MySQL**
-- **Doctrine**
-- **HTML / CSS**
-- **Bootstrap**
-- **Git / GitHub**
-- **Railway**
-- **MySQL Workbench**
-- **Shell script**
-
----
-
-## Base de données
-
-L’application utilise une base de données **MySQL**.
-
-Le script SQL de la base est présent dans le dépôt et permet de recréer les données nécessaires au fonctionnement de l’application en local.
-
----
 
 ## Installation en local
 
